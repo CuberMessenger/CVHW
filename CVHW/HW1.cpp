@@ -29,14 +29,14 @@ private:
 		y = answerY;
 	}
 public:
-	static void DrawCircle(CImg<unsigned char>* image, bool useCImg = false) {
-		float x = 60.0;
-		float y = 60.0;
-		float r = 20.0;
+	static void DrawCircle(CImg<unsigned char>* image, float x, float y, float r, bool useCImg = false) {
+		//float x = 60.0;
+		//float y = 60.0;
+		//float r = 2.0;
 		unsigned char yellow[] = { 255, 255, 0 };
 
 		if (useCImg) {
-			image->draw_circle(60, 60, 20, yellow, 1.0);
+			image->draw_circle(x, y, r, yellow, 1.0);
 		}
 		else {
 			for (int w = x - r; w < x + r; w++) {
@@ -137,7 +137,7 @@ public:
 
 void HW1() {
 	CImg<unsigned char> image;
-	string path = "C:/Users/cuber/OneDrive/资料/研二/计算机视觉助教/第1次作业/1.bmp";
+	string path = "C:/Users/User/OneDrive/资料/研二/计算机视觉助教/第1次作业/1.bmp";
 	image.load(path.c_str());
 	unsigned char green[] = { 0, 255, 0 };
 
@@ -146,12 +146,13 @@ void HW1() {
 	//2
 	//image.draw_triangle(60, 73, 45, 47, 75, 47, green, 1.0);
 	//3
-	//HW1Utils::DrawCircle(&image, false);
+	image.atXYZC(60, 60, 0, 0) = 255;
+	image.atXYZC(70, 60, 0, 0) = 255;
 	//4
 	//HW1Utils::DrawLine(&image, false);
 	//5
-	CImg<unsigned char>* rotated = HW1Utils::RotateImage(&image, 40.0, false, false);
-	rotated->display();
+	//CImg<unsigned char>* rotated = HW1Utils::RotateImage(&image, 40.0, false, false);
+	//rotated->display();
 
-	//image.display();
+	image.display();
 }
