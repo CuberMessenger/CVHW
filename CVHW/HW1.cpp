@@ -39,11 +39,11 @@ public:
 			image->draw_circle(x, y, r, yellow, 1.0);
 		}
 		else {
-			for (int w = x - r; w < x + r; w++) {
-				for (int h = y - r; h < y + r; h++) {
+			for (int w = x - r; w <= x + r; w++) {
+				for (int h = y - r; h <= y + r; h++) {
 					if (HW1Utils::L2Distance(w, h, x, y) <= r) {
 						for (int c = 0; c < 3; c++) {
-							image->set_linear_atXY(yellow[c], w, h, 0, c);
+							image->operator()(w, h, 0, c) = yellow[c];
 						}
 					}
 				}
@@ -109,7 +109,8 @@ public:
 					float y = h;
 					HW1Utils::RotatePoint(x, y, centerX, centerY, angle);
 					for (int c = 0; c < 3; c++) {
-						answer->set_linear_atXY(image->operator()(w, h, 0, c), x + deltaX, y + deltaY, 0, c);
+						answer->operator()(x + deltaX, y + deltaY, 0, c) =
+							image->operator()(w, h, 0, c);
 					}
 				}
 			}
@@ -124,10 +125,10 @@ public:
 					y = round(y);
 					if ((x >= 0) && (x <= width - 1) && (y >= 0) && (y <= height - 1)) {
 						for (int c = 0; c < 3; c++) {
-							answer->set_linear_atXY(image->operator()((int)x, (int)y, 0, c), w, h, 0, c);
+							answer->operator()(w, h, 0, c) =
+								image->operator()((int)x, (int)y, 0, c);
 						}
 					}
-
 				}
 			}
 		}
@@ -137,7 +138,7 @@ public:
 
 void HW1() {
 	CImg<unsigned char> image;
-	string path = "C:/Users/User/OneDrive/资料/研二/计算机视觉助教/第1次作业/1.bmp";
+	string path = "C:/Users/cuber/OneDrive/资料/研二/计算机视觉助教/第一次作业/1.bmp";
 	image.load(path.c_str());
 	unsigned char green[] = { 0, 255, 0 };
 
@@ -146,8 +147,7 @@ void HW1() {
 	//2
 	//image.draw_triangle(60, 73, 45, 47, 75, 47, green, 1.0);
 	//3
-	image.atXYZC(60, 60, 0, 0) = 255;
-	image.atXYZC(70, 60, 0, 0) = 255;
+	HW1Utils::DrawCircle(&image, 60.0, 60.0, 20.0, false);
 	//4
 	//HW1Utils::DrawLine(&image, false);
 	//5
